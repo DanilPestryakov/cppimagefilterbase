@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BW_FILTER_H
+#define BW_FILTER_H
 #include "abstractFilter.h"
 
 class bwFilter : public abstractFilter {
@@ -16,3 +17,4 @@ private:
 	int b;
 	int r;
 };
+#endif // BW_FILTER_H

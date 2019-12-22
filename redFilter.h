@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RED_FILTER_H
+#define RED_FILTER_H
 #include "abstractFilter.h"
 
 class redFilter : public abstractFilter {
@@ -16,3 +17,4 @@ private:
 	int b;
 	int r;
 };
+#endif // RED_FILTER_H

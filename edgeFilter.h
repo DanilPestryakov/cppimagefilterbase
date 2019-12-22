@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EDGE_FILTER_H
+#define EDGE_FILTER_H
 #include "abstractFilter.h"
 #include "bwFilter.h"
 
@@ -17,3 +18,4 @@ private:
 	int b;
 	int r;
 };
+#endif // EDGE_FILTER_H

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PARSER_H
+#define PARSER_H
 #include <string>
 #include <istream>
 #include <vector>
@@ -25,4 +26,7 @@ public:
 	int countOfFilters() { return this->filterQ.size(); };
 private:
 	std::vector<cParams> filterQ;
+	void parsStr(std::string str);
+	cParams str;
 };
+#endif // PARSER_H

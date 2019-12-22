@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TRESHOLD_FILTER_H
+#define TRESHOLD_FILTER_H
 #include "abstractFilter.h"
 #include "bwFilter.h"
 
@@ -18,3 +19,4 @@ private:
 	int r;
 	int returnMedian(char arr[], int size, char elem);
 };
+#endif // TRESHOLD_FILTER_H
