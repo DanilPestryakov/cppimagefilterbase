@@ -6,6 +6,7 @@
 //#include <memory>
 #include "stb_image.h"
 
+
 struct image_data
 {
     stbi_uc *pixels;
@@ -26,10 +27,9 @@ public:
     ~png_toolkit();
     bool load( std::string const &pictureName );
     bool save( std::string const &pictureName );
-    image_data getPixelData( void ) const;
-
+    image_data getPixelData(void) const;
 private:
-    image_data imgData;
+	image_data imgData;
 };
 
 #endif // PNG_TOOLKIT_H

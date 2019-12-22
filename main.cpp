@@ -1,5 +1,10 @@
 #include <iostream>
 #include "png_toolkit.h"
+#include "parser.h"
+#include "redFilter.h" 
+#include "tresholdFilter.h" 
+#include "edgeFilter.h" 
+#include "blurFilter.h" 
 
 int main( int argc, char *argv[] )
 {
@@ -7,13 +12,35 @@ int main( int argc, char *argv[] )
     // toolkit near test images!
     try
     {
-        if (argc != 3)
+        if (argc != 4)
             throw "Not enough arguments";
-
         png_toolkit studTool;
-        studTool.load(argv[1]);
-        studTool.save(argv[2]);
-
+        studTool.load(argv[2]);
+		parser pars;
+		pars.pars(argv[1]);
+		for (int i = 0; i < pars.countOfFilters(); i++) {
+			if (pars.GetString(i) == "Red") {
+				redFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
+				image_data img = studTool.getPixelData();
+				filter.applyFilter(img);
+			}
+			if (pars.GetString(i) == "Treshold") {
+				tresholdFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
+				image_data img = studTool.getPixelData();
+				filter.applyFilter(img);
+			}
+			if (pars.GetString(i) == "Edge") {
+				edgeFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
+				image_data img = studTool.getPixelData();
+				filter.applyFilter(img);
+			}
+			if (pars.GetString(i) == "Blur") {
+				blurFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
+				image_data img = studTool.getPixelData();
+				filter.applyFilter(img);
+			}
+		}
+        studTool.save(argv[3]);
     }
     catch (const char *str)
     {
