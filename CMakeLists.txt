@@ -2,4 +2,4 @@ cmake_minimum_required(VERSION 2.8)
 
 project(student_toolkit)
 add_executable(${PROJECT_NAME} "main.cpp" "png_toolkit.cpp" "png_toolkit.h"
-    "stb_image.h" "stb_image_write.h" "parser.h" "parser.cpp", "abstractFilter.h", "redFilter.h", "redFilter.cpp", "bwFilter.h", "bwFilter.cpp", "edgeFilter.h", "edgeFilter.cpp", "blurFilter.h", "blurFilter.cpp", "tresholdFilter.h", "tresholdFilter.cpp")
+    "stb_image.h" "stb_image_write.h" "parser.h" "parser.cpp" "abstractFilter.h" "redFilter.h" "redFilter.cpp" "bwFilter.h" "bwFilter.cpp" "edgeFilter.h" "edgeFilter.cpp" "blurFilter.h" "blurFilter.cpp" "tresholdFilter.h" "tresholdFilter.cpp")

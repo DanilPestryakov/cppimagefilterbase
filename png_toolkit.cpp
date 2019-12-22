@@ -3,8 +3,6 @@
 #include <array>
 #include "stb_image_write.h"
 #include "png_toolkit.h"
-#include <iostream>
-#include <vector>
 
 png_toolkit::png_toolkit()
 {
@@ -30,7 +28,7 @@ bool png_toolkit::save( const std::string &pictureName )
 }
 
 
-image_data png_toolkit::getPixelData(void) const
+image_data png_toolkit::getPixelData( void ) const
 {
     return imgData;
 }
