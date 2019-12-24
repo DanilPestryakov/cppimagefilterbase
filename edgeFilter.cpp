@@ -19,7 +19,7 @@ void edgeFilter::applyFilter(image_data imgData) {
 		newH = imgData.h / r - 1;
 	newLineSize = imgData.compPerPixel * newW;
 	lineSize = imgData.compPerPixel * imgData.w;
-	newBuf = new char[(newW + 1) * (newH + 1)];
+	newBuf = new char[(newW + 2) * (newH + 2)];
 	bw.applyFilter(imgData);
 	if (l != 0 && u != 0)
 		pos = lineSize * (imgData.h / l) + imgData.compPerPixel * (imgData.w / u + 1);
