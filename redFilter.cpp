@@ -23,9 +23,9 @@ void redFilter::applyFilter(image_data imgData) {
 		pos = lineSize * (imgData.h / l) + imgData.compPerPixel;
 	if (l == 0 && u == 0)
 		pos = 0;
-	for (int i = 0; i <= newH; i++)
+	for (int i = 0; i < newH; i++)
 	{
-		for (int j = 0; j <= newLineSize; j += imgData.compPerPixel)
+		for (int j = 0; j < newLineSize; j += imgData.compPerPixel)
 		{
 			imgData.pixels[pos + (lineSize)* i + j] = (unsigned char)255;
 			imgData.pixels[pos + (lineSize)* i + j + 1] = (unsigned char)0;
