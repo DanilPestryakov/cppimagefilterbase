@@ -26,8 +26,5 @@ public:
 	int countOfFilters() { return this->filterQ.size(); };
 private:
 	std::vector<cParams> filterQ;
-	void parsStr(std::string str);
-	cParams str;
-	int MyStoi(std::string str);
 };
 #endif // PARSER_H
