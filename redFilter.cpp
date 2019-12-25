@@ -9,8 +9,8 @@ void redFilter::applyFilter(image_data imgData) {
 		newH2 = imgData.h / b;
 	}
 	else{
-		newH1 = imgData.h / b;
-		newH2 = 0;
+		newH1 = 0;
+		newH2 = imgData.h / b;
 	}
 	if (l != 0)
 	{
@@ -18,13 +18,13 @@ void redFilter::applyFilter(image_data imgData) {
 		newW2 = imgData.w / r;
 	}
 	else{
-		newW1 = imgData.w / r;
-		newW2 = 0;
+		newW1 = 0;
+		newW2 = imgData.w / r;
 	}
 
-	for (int i = newH2; i < newH1; i++)
+	for (int i = newH1; i < newH2; i++)
 	{
-		for (int j = newW2; j < new1; j++)
+		for (int j = newW1; j < newW2; j++)
 		{
 			imgData.pixels[(imgData.w * i + j) * imgData.compPerPixel] = (unsigned char)255;
 			imgData.pixels[(imgData.w * i + j) * imgData.compPerPixel + 1] = (unsigned char)0;
@@ -32,4 +32,3 @@ void redFilter::applyFilter(image_data imgData) {
 		}
 	}
 }
-
