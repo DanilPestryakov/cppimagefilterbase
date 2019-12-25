@@ -9,8 +9,8 @@ void redFilter::applyFilter(image_data imgData) {
 		newH2 = imgData.h / b;
 	}
 	else{
-		newH1 = 0;
-		newH2 = imgData.h / b;
+		newH1 = imgData.h / b;
+		newH2 = 0;
 	}
 	if (l != 0)
 	{
@@ -18,8 +18,8 @@ void redFilter::applyFilter(image_data imgData) {
 		newW2 = imgData.w / r;
 	}
 	else{
-		newW1 = 0;
-		newW2 = imgData.w / r;
+		newW1 = imgData.w / r;
+		newW2 = 0;
 	}
 
 	for (int i = newH2; i < newH1; i++)
