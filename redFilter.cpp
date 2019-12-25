@@ -22,9 +22,9 @@ void redFilter::applyFilter(image_data imgData) {
 		newW2 = imgData.w / r;
 	}
 
-	for (int i = newW1; i < newW2; i++)
+	for (int i = newH1; i < newH2; i++)
 	{
-		for (int j = newH1; j < newH2; j++)
+		for (int j = newW1; j < newW2; j++)
 		{
 			imgData.pixels[(imgData.w * i + j) * imgData.compPerPixel] = (unsigned char)255;
 			imgData.pixels[(imgData.w * i + j) * imgData.compPerPixel + 1] = (unsigned char)0;
