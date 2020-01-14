@@ -20,23 +20,23 @@ int main( int argc, char *argv[] )
 		pars.pars(argv[1]);
 		for (int i = 0; i < pars.countOfFilters(); i++) {
 			if (pars.GetString(i) == "Red") {
-				redFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				image_data img = studTool.getPixelData();
+				redFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				filter.applyFilter(img);
 			}
 			if (pars.GetString(i) == "Treshold") {
-				tresholdFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				image_data img = studTool.getPixelData();
+				tresholdFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				filter.applyFilter(img);
 			}
 			if (pars.GetString(i) == "Edge") {
-				edgeFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				image_data img = studTool.getPixelData();
+				edgeFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				filter.applyFilter(img);
 			}
 			if (pars.GetString(i) == "Blur") {
-				blurFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				image_data img = studTool.getPixelData();
+				blurFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				filter.applyFilter(img);
 			}
 		}
