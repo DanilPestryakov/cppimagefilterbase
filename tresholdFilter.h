@@ -2,6 +2,8 @@
 #define TRESHOLD_FILTER_H
 #include "abstractFilter.h"
 #include "bwFilter.h"
+#include <vector>
+#include <algorithm>
 
 class tresholdFilter : public abstractFilter {
 public:
