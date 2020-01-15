@@ -1,5 +1,5 @@
 #include "tresholdFilter.h"
-
+#include <cstring>
 void tresholdFilter::applyFilter(image_data imgData) {
 	unsigned char* newBuf;
 	unsigned char square[25];
