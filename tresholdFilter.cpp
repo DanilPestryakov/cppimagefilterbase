@@ -39,7 +39,7 @@ void tresholdFilter::applyFilter(image_data imgData) {
 				}
 			}
 			std::sort(matrix.begin(), matrix.end());
-			if (matrix[matrix.size() / 2] < imgData.pixels[(i * imgData.w + j) * imgData.compPerPixel])
+			if (matrix[matrix.size() / 2] > imgData.pixels[(i * imgData.w + j) * imgData.compPerPixel])
 				newBuf[(i * imgData.w + j)] = (unsigned char)0;
 			else
 				newBuf[(i * imgData.w + j)] = (unsigned char)255;
