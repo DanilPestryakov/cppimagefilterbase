@@ -1,38 +1,33 @@
 #include "bwFilter.h"
 
 void bwFilter::applyFilter(image_data imgData) {
-	int newW;
-	int newH;
-	int newLineSize;
-	int pos;
 	int x;
-	int lineSize;
+	int newCoord[4];
 	if (u != 0)
-		newW = imgData.w / b - imgData.w / u - 1;
+		newCoord[0] = imgData.h / u;
 	else
-		newW = imgData.w / b - 1;
+		newCoord[0] = 0;
 	if (l != 0)
-		newH = imgData.h / r - imgData.h / l - 1;
+		newCoord[1] = imgData.w / l;
 	else
-		newH = imgData.h / r - 1;
-	newLineSize = imgData.compPerPixel * newW;
-	lineSize = imgData.compPerPixel * imgData.w;
-	if (l != 0 && u != 0)
-		pos = lineSize * (imgData.h / l) + imgData.compPerPixel * (imgData.w / u + 1);
-	if (l == 0 && u != 0)
-		pos = imgData.compPerPixel * (imgData.w / u + 1);
-	if (l != 0 && u == 0)
-		pos = lineSize * (imgData.h / l) + imgData.compPerPixel;
-	if (l == 0 && u == 0)
-		pos = 0;
-	for (int i = 0; i <= newH; i++)
+		newCoord[1] = 0;
+	if (b != 0)
+		newCoord[2] = imgData.h / b;
+	else
+		newCoord[2] = 0;
+	if (r != 0)
+		newCoord[3] = imgData.w / r;
+	else
+		newCoord[3] = 0;
+	for (int i = newCoord[0]; i < newCoord[2]; i++)
 	{
-		for (int j = 0; j <= newLineSize; j += imgData.compPerPixel)
+		for (int j = newCoord[1]; j < newCoord[3]; j++) 
 		{
-			x = (3 * imgData.pixels[pos + (lineSize)* i + j] + 6 * imgData.pixels[pos + (lineSize)* i + j + 1] + imgData.pixels[pos + (lineSize)* i + j + 2]) / 10;
-			imgData.pixels[pos + (lineSize)* i + j] = (unsigned char)x;
-			imgData.pixels[pos + (lineSize)* i + j + 1] = (unsigned char)x;
-			imgData.pixels[pos + (lineSize)* i + j + 2] = (unsigned char)x;
+			int pos = (i * imgData.w + j) * imgData.compPerPixel;
+			x = (3 * imgData.pixels[pos] + 6 * imgData.pixels[pos + 1] + imgData.pixels[pos + 2]) / 10;
+			imgData.pixels[pos] = (unsigned char)x;
+			imgData.pixels[pos + 1] = (unsigned char)x;
+			imgData.pixels[pos + 2] = (unsigned char)x;
 		}
 	}
 }
