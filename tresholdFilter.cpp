@@ -55,7 +55,7 @@ void tresholdFilter::applyFilter(image_data imgData) {
 }
 
 
-int tresholdFilter::returnMedian(unsigned char arr[], int size, char elem)
+int tresholdFilter::returnMedian(unsigned char arr[], int size, unsigned char elem)
 {
 	int key = 0;
 	unsigned char temp;
