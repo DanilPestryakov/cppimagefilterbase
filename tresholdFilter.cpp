@@ -1,62 +1,64 @@
 #include "tresholdFilter.h"
 
 void tresholdFilter::applyFilter(image_data imgData) {
-	int newW;
-	int newH;
-	int newLineSize;
-	int pos;
 	char* newBuf;
 	char square[25];
 	int counter;
-	int lineSize;
+	int newCoord[4];
 	bwFilter bw(u, l, b, r);
 	if (u != 0)
-		newW = imgData.w / b - imgData.w / u - 1;
+		newCoord[0] = imgData.h / u;
 	else
-		newW = imgData.w / b - 1;
+		newCoord[0] = 0;
 	if (l != 0)
-		newH = imgData.h / r - imgData.h / l - 1;
+		newCoord[1] = imgData.w / l;
 	else
-		newH = imgData.h / r - 1;
-	newLineSize = imgData.compPerPixel * newW;
-	lineSize = imgData.compPerPixel * imgData.w;
-	newBuf = new char[(newW + 2) * (newH + 2)];
+		newCoord[1] = 0;
+	if (b != 0)
+		newCoord[2] = imgData.h / b;
+	else
+		newCoord[2] = 0;
+	if (r != 0)
+		newCoord[3] = imgData.w / r;
+	else
+		newCoord[3] = 0;
+	newBuf = new char[imgData.h * imgData.w];
 	bw.applyFilter(imgData);
-	if (l != 0 && u != 0)
-		pos = lineSize * (imgData.h / l) + imgData.compPerPixel * (imgData.w / u + 1);
-	if (l == 0 && u != 0)
-		pos = imgData.compPerPixel * (imgData.w / u + 1);
-	if (l != 0 && u == 0)
-		pos = lineSize * (imgData.h / l) + imgData.compPerPixel;
-	if (l == 0 && u == 0)
-		pos = 0;
-	for (int i = 0; i <= newH; i++)
+	for (int i = newCoord[0]; i < newCoord[2]; i++)
 	{
-		for (int j = 0; j < newLineSize; j += imgData.compPerPixel)
+		for (int j = newCoord[1]; j < newCoord[3]; j++)
 		{
 			counter = 0;
 			for (int t = -2; t <= 2; t++)
 			{
 				for (int k = -2; k <= 2; k++)
 				{
-					if (!((i + t) < 0 || (i + t) >= newH || (j + imgData.compPerPixel * k) < 0 || (j + imgData.compPerPixel * k) >= newW * imgData.compPerPixel))
+					if (!((i + t) < newCoord[0] || (i + t) >= newCoord[2] || (j + k) < newCoord[1] || (j + k) >= newCoord[3]))
 					{
-						square[counter] = imgData.pixels[(newLineSize) * (i + t) + (j + imgData.compPerPixel * k)];
+						int pos = ((i + t) * imgData.w + j + k) * imgData.compPerPixel;
+						square[counter] = imgData.pixels[pos];
 						counter++;
 					}
 				}
 			}
-			if (!(returnMedian(square, counter, imgData.pixels[(newLineSize) * i + j])))
-				newBuf[newW * i + j] = 0;
+			if (!(returnMedian(square, counter, imgData.pixels[(i * imgData.w + j) * imgData.compPerPixel])))
+				newBuf[(i * imgData.w + j)] = (unsigned char)0;
+			else
+				newBuf[(i * imgData.w + j)] = (unsigned char)255;
 		}
 	}
-	for (int i = 0; i <= newH; i++)
+	for (int i = newCoord[0]; i < newCoord[2]; i++)
 	{
-		for (int j = 0; j < newLineSize; j += 3)
+		for (int j = newCoord[1]; j < newCoord[3]; j++)
 		{
-			imgData.pixels[pos + (lineSize)* i + j] = (unsigned char)newBuf[newW * i + j];
-			imgData.pixels[pos + (lineSize)* i + j + 1] = (unsigned char)newBuf[newW * i + j];
-			imgData.pixels[pos + (lineSize)* i + j + 2] = (unsigned char)newBuf[newW * i + j];
+			int pos = (i * imgData.w + j) * imgData.compPerPixel;
+			int posBuf = (i * imgData.w + j);
+			if (newBuf[posBuf] == (unsigned char)0)
+			{
+				imgData.pixels[pos] = (unsigned char)newBuf[posBuf];
+				imgData.pixels[pos + 1] = (unsigned char)newBuf[posBuf];
+				imgData.pixels[pos + 2] = (unsigned char)newBuf[posBuf];
+			}
 		}
 	}
 }
@@ -65,7 +67,7 @@ void tresholdFilter::applyFilter(image_data imgData) {
 int tresholdFilter::returnMedian(char arr[], int size, char elem)
 {
 	int key = 0;
-	int temp;
+	char temp;
 	for (int i = 0; i < size - 1; i++)
 	{
 		key = i + 1;
