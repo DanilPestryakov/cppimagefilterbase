@@ -1,11 +1,9 @@
 #include "tresholdFilter.h"
-#include <cstring>
 void tresholdFilter::applyFilter(image_data imgData) {
 	unsigned char* newBuf;
 	unsigned char square[25];
 	int count;
 	int newCoord[4];
-	int size = imgData.h * imgData.w * imgData.compPerPixel;
 	bwFilter bw(u, l, b, r);
 	if (u != 0)
 		newCoord[0] = imgData.h / u;
@@ -24,8 +22,7 @@ void tresholdFilter::applyFilter(image_data imgData) {
 	else
 		newCoord[3] = 0;
 	bw.applyFilter(imgData);
-	newBuf = new unsigned char[size];
-	memcpy(newBuf, imgData.pixels, size);
+	newBuf = new unsigned char[imgData.h * imgData.w];
 	for (int i = newCoord[0]; i < newCoord[2]; i++)
 	{
 		for (int j = newCoord[1]; j < newCoord[3]; j++)
@@ -38,17 +35,34 @@ void tresholdFilter::applyFilter(image_data imgData) {
 					if (!((i + t) < newCoord[0] || (i + t) >= newCoord[2] || (j + k) < newCoord[1] || (j + k) >= newCoord[3]))
 					{
 						int pos = ((i + t) * imgData.w + j + k) * imgData.compPerPixel;
-						square[count] = newBuf[pos];
+						square[count] = imgData.pixels[pos];
 						count++;
 					}
 				}
 			}
-			if (!returnMedian(square, count, newBuf[(i * imgData.w + j) * imgData.compPerPixel]))
+			if (!returnMedian(square, count, imgData.pixels[(i * imgData.w + j) * imgData.compPerPixel]))
 			{
-				int pos = (i * imgData.w + j) * imgData.compPerPixel;
-				imgData.pixels[pos] = (unsigned char)0;
-				imgData.pixels[pos + 1] = (unsigned char)0;
-				imgData.pixels[pos + 2] = (unsigned char)0;
+				int pos = (i * imgData.w + j);
+				newBuf[pos] = (unsigned char)0;
+			}
+			else
+			{
+				int pos = (i * imgData.w + j);
+				newBuf[pos] = (unsigned char)255;
+			}
+		}
+	}
+	for (int i = newCoord[0]; i < newCoord[2]; i++)
+	{
+		for (int j = newCoord[1]; j < newCoord[3]; j++)
+		{
+			int pos = (i * imgData.w + j) * imgData.compPerPixel;
+			int posBuf = (i * imgData.w + j);
+			if (newBuf[posBuf] == (unsigned char)0)
+			{
+				imgData.pixels[pos] = (unsigned char)newBuf[posBuf];
+				imgData.pixels[pos + 1] = (unsigned char)newBuf[posBuf];
+				imgData.pixels[pos + 2] = (unsigned char)newBuf[posBuf];
 			}
 		}
 	}
