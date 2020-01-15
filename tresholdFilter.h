@@ -19,6 +19,6 @@ private:
 	int l;
 	int b;
 	int r;
-	int returnMedian(char arr[], int size, char elem);
+	int returnMedian(unsigned char arr[], int size, char elem);
 };
 #endif // TRESHOLD_FILTER_H
