@@ -43,6 +43,7 @@ void tresholdFilter::applyFilter(image_data imgData) {
 				newBuf[(i * imgData.w + j)] = (unsigned char)0;
 			else
 				newBuf[(i * imgData.w + j)] = (unsigned char)255;
+			matrix.clear();
 		}
 	}
 	for (int i = newCoord[0]; i < newCoord[2]; i++)
