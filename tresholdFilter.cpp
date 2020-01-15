@@ -2,8 +2,7 @@
 
 void tresholdFilter::applyFilter(image_data imgData) {
 	char* newBuf;
-	char square[25];
-	int counter;
+	std::vector<int> matrix;
 	int newCoord[4];
 	bwFilter bw(u, l, b, r);
 	if (u != 0)
@@ -28,7 +27,6 @@ void tresholdFilter::applyFilter(image_data imgData) {
 	{
 		for (int j = newCoord[1]; j < newCoord[3]; j++)
 		{
-			counter = 0;
 			for (int t = -2; t <= 2; t++)
 			{
 				for (int k = -2; k <= 2; k++)
@@ -36,12 +34,12 @@ void tresholdFilter::applyFilter(image_data imgData) {
 					if (!((i + t) < newCoord[0] || (i + t) >= newCoord[2] || (j + k) < newCoord[1] || (j + k) >= newCoord[3]))
 					{
 						int pos = ((i + t) * imgData.w + j + k) * imgData.compPerPixel;
-						square[counter] = imgData.pixels[pos];
-						counter++;
+						matrix.push_back(imgData.pixels[pos]);
 					}
 				}
 			}
-			if (!(returnMedian(square, counter, imgData.pixels[(i * imgData.w + j) * imgData.compPerPixel])))
+			std::sort(matrix.begin(), matrix.end());
+			if (matrix[matrix.size() / 2] > imgData.pixels[(i * imgData.w + j) * imgData.compPerPixel])
 				newBuf[(i * imgData.w + j)] = (unsigned char)0;
 			else
 				newBuf[(i * imgData.w + j)] = (unsigned char)255;
