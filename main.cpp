@@ -24,7 +24,7 @@ int main( int argc, char *argv[] )
 				redFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				filter.applyFilter(img);
 			}
-			if (pars.GetString(i) == "Treshold") {
+			if (pars.GetString(i) == "Threshold") {
 				image_data img = studTool.getPixelData();
 				tresholdFilter filter(pars.GetU(i), pars.GetL(i), pars.GetB(i), pars.GetR(i));
 				filter.applyFilter(img);
